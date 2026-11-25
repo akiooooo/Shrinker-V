@@ -2,16 +2,16 @@ using System;
 using System.IO;
 using System.Threading;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     public enum LogLevel { Info, Ok, Warn, Error }
 
     public delegate void ProcessingProgress(string message, LogLevel level, ProcessingStats stats,
         int completedArchives, int totalArchives);
 
-    public static class WakaShrinker
+    public static class Shrinker
     {
-        static WakaShrinker() { BundledRuntime.Initialize(); }
+        static Shrinker() { BundledRuntime.Initialize(); }
 
         private static int active;
 

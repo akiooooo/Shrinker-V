@@ -1,4 +1,6 @@
-# Shrinker V by akiooo
+<p align="center"><img src="assets/logo.png" width="80" height="80" alt="Логотип akiooo"></p>
+
+<h1 align="center">Shrinker V by akiooo</h1>
 
 Пакетная обработка текстур GTA V для Windows x64. Программа обходит RPF, включая вложенные архивы, уменьшает текстуры внутри YTD, YDR, YDD и YFT и по выбору переводит цветовые текстуры в оттенки серого. Есть приложение WinForms и библиотека C# с одним и тем же обработчиком.
 
@@ -33,17 +35,17 @@
 
 ## Вызов из C#
 
-Добавьте ссылку на проект `src/Waka.Core/Waka.Core.csproj` или возьмите самостоятельную `Waka.Core.dll` из архива SDK на странице релиза. Библиотека включает тот же комплект зависимостей, что и EXE.
+Добавьте ссылку на проект `src/ShrinkerV.Core/ShrinkerV.Core.csproj` или возьмите самостоятельную `ShrinkerV.Core.dll` из архива SDK на странице релиза. Библиотека включает тот же комплект зависимостей, что и EXE.
 
 ```csharp
-using Waka.Core;
+using ShrinkerV.Core;
 
-var options = WakaShrinker.CreateDefaultOptions();
+var options = Shrinker.CreateDefaultOptions();
 options.InputFolder = inputFolder;
 options.OutputFolder = outputFolder;
 options.CompressionFactor = 4;
 options.UseGrayscale = true;
-ProcessingStats result = WakaShrinker.Run(options, Console.WriteLine);
+ProcessingStats result = Shrinker.Run(options, Console.WriteLine);
 ```
 
 `Run` работает синхронно. Статистика содержит число изменённых и неудачно обработанных архивов, обработанных и пропущенных текстур, ошибки и размеры в байтах. Проверяйте `ArchivesFailed`, `TexturesFailed` и `ErrorsEncountered`. Для интерфейса используйте `RunWithProgress`. Его обработчик получает сообщение, уровень, текущие счётчики, число завершённых архивов и общее количество. Обработчик может вызываться из рабочих потоков. Для отмены передайте `CancellationToken` через `options.Cancel` и обработайте `OperationCanceledException`.
@@ -68,8 +70,8 @@ ProcessingStats result = WakaShrinker.Run(options, Console.WriteLine);
 
 | Каталог | Назначение |
 | --- | --- |
-| `src/Waka.Core` | Публичный API, чтение и запись RPF, правила выбора ресурсов и кодек DDS |
-| `src/Waka.Studio` | Окно приложения, настройки и журнал |
-| `tests/Waka.Tests` | Исполняемые регрессионные и интеграционные проверки |
+| `src/ShrinkerV.Core` | Публичный API, чтение и запись RPF, правила выбора ресурсов и кодек DDS |
+| `src/ShrinkerV.Studio` | Окно приложения, настройки и журнал |
+| `tests/ShrinkerV.Tests` | Исполняемые регрессионные и интеграционные проверки |
 | `examples` | Вызов API из отдельной программы |
 | `vendor`, `licenses` | Встраиваемые библиотеки, данные и уведомления авторов |

@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Waka.Studio
+namespace ShrinkerV.Studio
 {
-    internal static class WakaLog
+    internal static class StudioLog
     {
         private static readonly object _sync = new object();
         private static StreamWriter _writer;
@@ -21,7 +21,7 @@ namespace Waka.Studio
                 try
                 {
                     Directory.CreateDirectory(folder);
-                    var path = Path.Combine(folder, "waka_shrinker.log");
+                    var path = Path.Combine(folder, "shrinker-v.log");
                     _writer = new StreamWriter(
                         new FileStream(path, FileMode.Append, FileAccess.Write,
                             FileShare.ReadWrite, 65536, FileOptions.SequentialScan),

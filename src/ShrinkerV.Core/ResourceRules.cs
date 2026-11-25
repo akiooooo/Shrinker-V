@@ -6,7 +6,7 @@ using System.Threading;
 using CodeWalker.GameFiles;
 using CodeWalker.Utils;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     internal sealed partial class GtaProcessor
     {

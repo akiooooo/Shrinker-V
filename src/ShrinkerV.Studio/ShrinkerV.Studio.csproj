@@ -10,12 +10,13 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <ProjectReference Include="..\..\src\Waka.Core\Waka.Core.csproj"><Project>{333FB723-69B1-490E-8286-0ED193566001}</Project><Name>Waka.Core</Name></ProjectReference>
-    <EmbeddedResource Include="$(OutputPath)Waka.Core.dll"><LogicalName>Waka.Core.dll</LogicalName></EmbeddedResource>
+    <ProjectReference Include="..\..\src\ShrinkerV.Core\ShrinkerV.Core.csproj"><Project>{333FB723-69B1-490E-8286-0ED193566001}</Project><Name>ShrinkerV.Core</Name></ProjectReference>
+    <EmbeddedResource Include="$(OutputPath)ShrinkerV.Core.dll"><LogicalName>ShrinkerV.Core.dll</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\..\assets\logo.png"><LogicalName>ShrinkerV.Logo.png</LogicalName></EmbeddedResource>
     <Compile Include="Program.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="Theme.cs" />
-    <Compile Include="WakaLog.cs" />
+    <Compile Include="StudioLog.cs" />
     <Compile Include="AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

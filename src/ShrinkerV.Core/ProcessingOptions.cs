@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     public sealed class ProcessingOptions
     {

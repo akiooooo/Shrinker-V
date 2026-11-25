@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     internal static class DdsEngine
     {

@@ -25,16 +25,16 @@ if ($RuntimeDir) {
     $paths = foreach ($name in $names) { (Get-Item -LiteralPath (Join-Path $RuntimeDir $name)).FullName }
     Compress-Archive -LiteralPath $paths -DestinationPath $bundle -Force
 }
-& (Join-Path $framework 'MSBuild.exe') (Join-Path $PSScriptRoot 'WakaShrinker.sln') /nologo /v:minimal /p:Configuration=Release /p:Platform=x64 "/p:FrameworkPathOverride=$framework" "/p:WakaDependencyDir=$managed" "/p:RuntimeBundle=$bundle"
+& (Join-Path $framework 'MSBuild.exe') (Join-Path $PSScriptRoot 'ShrinkerV.sln') /nologo /v:minimal /p:Configuration=Release /p:Platform=x64 "/p:FrameworkPathOverride=$framework" "/p:ShrinkerVDependencyDir=$managed" "/p:RuntimeBundle=$bundle"
 if ($LASTEXITCODE) { throw "Build failed ($LASTEXITCODE)" }
 
 $out = Join-Path $PSScriptRoot 'artifacts\Release'
 if ($Test) {
-    $previous = $env:WAKA_TEST_INPUT
+    $previous = $env:SHRINKER_V_TEST_INPUT
     try {
-        if ($FixtureDir) { $env:WAKA_TEST_INPUT = (Resolve-Path -LiteralPath $FixtureDir).Path }
-        & (Join-Path $out 'Waka.Tests.exe')
+        if ($FixtureDir) { $env:SHRINKER_V_TEST_INPUT = (Resolve-Path -LiteralPath $FixtureDir).Path }
+        & (Join-Path $out 'ShrinkerV.Tests.exe')
         if ($LASTEXITCODE) { throw "Tests failed ($LASTEXITCODE)" }
     }
-    finally { $env:WAKA_TEST_INPUT = $previous }
+    finally { $env:SHRINKER_V_TEST_INPUT = $previous }
 }

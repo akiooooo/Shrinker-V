@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
-using Waka.Core;
+using ShrinkerV.Core;
 
-namespace Waka.Studio
+namespace ShrinkerV.Studio
 {
     internal sealed class MainForm : Form
     {
@@ -44,6 +44,7 @@ namespace Waka.Studio
         public MainForm()
         {
             Text          = "Shrinker V by akiooo";
+            Icon = Icon.ExtractAssociatedIcon(typeof(MainForm).Assembly.Location);
             MinimumSize   = new Size(1160, 740);
             Size          = new Size(1320, 920);
             BackColor     = Dk.Bg0;
@@ -122,17 +123,29 @@ namespace Waka.Studio
         {
             SuspendLayout();
             var shell = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, RowCount = 1, BackColor = Dk.Bg0 };
-            shell.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 168));
+            shell.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 216));
             shell.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
             var sidebar = new Panel { Dock = DockStyle.Fill, BackColor = Dk.Bg1, Padding = new Padding(18, 26, 18, 18), Margin = new Padding(0) };
-            var brand = StudioText("Shrinker V", 17, Dk.Txt, 42); brand.Font = Dk.FontBody(17, FontStyle.Bold);
+            var brand = StudioText("Shrinker V", 15, Dk.Txt, 42); brand.Font = Dk.FontBody(15, FontStyle.Bold);
             var sub = StudioText("by akiooo", 8, Dk.Acc, 28);
+            var wordmark = new Panel { Dock = DockStyle.Top, Height = 58, Padding = new Padding(50, 0, 0, 0) };
+            brand.Height = 32;
+            sub.Height = 22;
+            wordmark.Controls.Add(sub);
+            wordmark.Controls.Add(brand);
+            var logo = new PictureBox { SizeMode = PictureBoxSizeMode.Zoom, Location = new Point(0, 4),
+                Size = new Size(42, 42), AccessibleName = "Shrinker V by akiooo" };
+            using (var stream = typeof(MainForm).Assembly.GetManifestResourceStream("ShrinkerV.Logo.png"))
+            using (var image = Image.FromStream(stream))
+                logo.Image = new Bitmap(image);
+            logo.Disposed += (s, e) => logo.Image.Dispose();
+            wordmark.Controls.Add(logo);
             var nav = new FlowLayoutPanel { Dock = DockStyle.Top, Height = 184, FlowDirection = FlowDirection.TopDown, Padding = new Padding(0, 28, 0, 0) };
             var navMain = new DarkButton { Text = "01   Сжатие", Width = 132, Height = 42, Accent = true, Margin = new Padding(0,0,0,8) };
             var navAdvanced = new DarkButton { Text = "02   Параметры", Width = 132, Height = 42, FillColor = Dk.Bg1, Margin = new Padding(0,0,0,8) };
             var navLog = new DarkButton { Text = "03   Журнал", Width = 132, Height = 42, FillColor = Dk.Bg1 };
             nav.Controls.AddRange(new Control[] { navMain, navAdvanced, navLog });
-            sidebar.Controls.Add(nav); sidebar.Controls.Add(sub); sidebar.Controls.Add(brand);
+            sidebar.Controls.Add(nav); sidebar.Controls.Add(wordmark);
             var sideNote = StudioText("GTA V\nЛокальная обработка\nRPF / YTD / YDR / YDD", 8.5f, Dk.TxtM, 90); sideNote.Dock = DockStyle.Bottom; sidebar.Controls.Add(sideNote);
             shell.Controls.Add(sidebar, 0, 0);
 
@@ -463,7 +476,7 @@ namespace Waka.Studio
                           : "  ";
             string line = "[" + DateTime.Now.ToString("HH:mm:ss") + "] " + prefix + msg;
             _log.AppendColored(line, col);
-            WakaLog.Write(line);
+            StudioLog.Write(line);
         }
 
         // ── START / STOP ──────────────────────────────────────────────────────────
@@ -517,7 +530,7 @@ namespace Waka.Studio
             }
 
             _log.Clear();
-            WakaLog.Init(inPlace ? inp : out_);
+            StudioLog.Init(inPlace ? inp : out_);
             if (_cts != null) _cts.Dispose();
             _cts = new CancellationTokenSource();
             _totalArchives = 0;
@@ -553,7 +566,7 @@ namespace Waka.Studio
                 ProcessingStats stats = null;
                 try
                 {
-                    stats = WakaShrinker.RunWithProgress(opts, (msg, lvl, current, processed, total) =>
+                    stats = Shrinker.RunWithProgress(opts, (msg, lvl, current, processed, total) =>
                     {
                         _totalArchives = total;
                         Log(msg, lvl);
@@ -579,12 +592,12 @@ namespace Waka.Studio
                 }
                 finally
                 {
-                    BeginInvoke(new Action(WakaLog.Close));
+                    BeginInvoke(new Action(StudioLog.Close));
                     SetBusy(false);
                 }
             });
             t.IsBackground = true;
-            t.Name = "WakaWorker";
+            t.Name = "ShrinkerVWorker";
             t.Start();
         }
     }

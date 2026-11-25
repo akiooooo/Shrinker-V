@@ -4,7 +4,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     internal static class BundledRuntime
     {
@@ -55,7 +55,7 @@ namespace Waka.Core
         {
             get
             {
-                var external = Environment.GetEnvironmentVariable("WAKA_RUNTIME_DIR");
+                var external = Environment.GetEnvironmentVariable("SHRINKER_V_RUNTIME_DIR");
                 return String.IsNullOrWhiteSpace(external) ? Extracted.Value : Path.GetFullPath(external);
             }
         }

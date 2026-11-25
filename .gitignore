@@ -1,4 +1,4 @@
-﻿artifacts/
+artifacts/
 local/
 bin/
 obj/
@@ -14,7 +14,7 @@ obj/
 *.awc
 *.ypt
 *.stub
-*.wakabak
+*.shrinkerbak
 .env
 
 !/vendor/managed/CodeWalker.Core.dll

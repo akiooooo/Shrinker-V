@@ -4,7 +4,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Waka.Studio
+namespace ShrinkerV.Studio
 {
     internal static class Program
     {
@@ -17,8 +17,8 @@ namespace Waka.Studio
 
         private static Assembly LoadCore(object sender, ResolveEventArgs args)
         {
-            if (new AssemblyName(args.Name).Name != "Waka.Core") return null;
-            using (var stream = typeof(Program).Assembly.GetManifestResourceStream("Waka.Core.dll"))
+            if (new AssemblyName(args.Name).Name != "ShrinkerV.Core") return null;
+            using (var stream = typeof(Program).Assembly.GetManifestResourceStream("ShrinkerV.Core.dll"))
             using (var bytes = new MemoryStream())
             {
                 stream.CopyTo(bytes);

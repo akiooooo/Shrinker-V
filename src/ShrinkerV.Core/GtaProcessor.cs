@@ -6,7 +6,7 @@ using System.Threading;
 using CodeWalker.GameFiles;
 using CodeWalker.Utils;
 
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     internal sealed partial class GtaProcessor
     {
@@ -208,7 +208,7 @@ namespace Waka.Core
         {
             string relative = source.Substring(_opts.InputFolder.Length);
             string destination = Path.Combine(_opts.OutputFolder, relative);
-            string staging = Path.Combine(Path.GetDirectoryName(destination), ".waka-" + Guid.NewGuid().ToString("N"));
+            string staging = Path.Combine(Path.GetDirectoryName(destination), ".shrinker-v-" + Guid.NewGuid().ToString("N"));
             string name = Path.GetFileName(source);
             string staged = Path.Combine(staging, name);
             try

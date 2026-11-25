@@ -1,5 +1,5 @@
-using Waka.Core;
-using Waka.Studio;
+using ShrinkerV.Core;
+using ShrinkerV.Studio;
 using System;
 using System.IO;
 using System.Linq;
@@ -76,29 +76,29 @@ internal static class StudioTests
         var cancel = new CancellationTokenSource(); cancel.Cancel(); opts.Cancel = cancel.Token;
         bool canceled = false; try { proc.Run(); } catch(OperationCanceledException) { canceled = true; }
         Check(canceled,"cancellation honored");
-        string sandbox = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "waka-api-" + Guid.NewGuid().ToString("N"))).FullName;
+        string sandbox = Directory.CreateDirectory(Path.Combine(Path.GetTempPath(), "shrinker-v-api-" + Guid.NewGuid().ToString("N"))).FullName;
         try {
             var input = Directory.CreateDirectory(Path.Combine(sandbox, "input")).FullName;
             var output = Directory.CreateDirectory(Path.Combine(sandbox, "output")).FullName;
-            var apiOptions = WakaShrinker.CreateDefaultOptions();
+            var apiOptions = Shrinker.CreateDefaultOptions();
             Check(apiOptions.ProtectCharacters && apiOptions.KeepAudio && apiOptions.KeepEffects && apiOptions.KeepVideo, "safe API defaults");
             apiOptions.InputFolder = input;
             apiOptions.OutputFolder = Path.Combine(input, "nested");
             bool rejected = false;
-            try { WakaShrinker.Run(apiOptions); } catch (ArgumentException) { rejected = true; }
+            try { Shrinker.Run(apiOptions); } catch (ArgumentException) { rejected = true; }
             Check(rejected && !Directory.Exists(apiOptions.OutputFolder), "nested output rejected before writing");
             apiOptions.OutputFolder = output;
             File.WriteAllText(Path.Combine(input, "bad.rpf"), "invalid archive");
             File.WriteAllText(Path.Combine(output, "bad.rpf"), "previous result");
-            var failure = WakaShrinker.Run(apiOptions);
+            var failure = Shrinker.Run(apiOptions);
             Check(failure.ArchivesFailed == 1 && File.ReadAllText(Path.Combine(output, "bad.rpf")) == "previous result", "failed run preserves prior output");
         } finally { Directory.Delete(sandbox, true); }
-        if (String.IsNullOrEmpty(Environment.GetEnvironmentVariable("WAKA_TEST_INPUT"))) { Console.WriteLine("TOTAL PASS: "+passed+" (optional RPF fixture skipped)"); return 0; }
-        string root = Path.Combine(Path.GetTempPath(),"waka-tests-"+Guid.NewGuid().ToString("N")); Directory.CreateDirectory(root);
+        if (String.IsNullOrEmpty(Environment.GetEnvironmentVariable("SHRINKER_V_TEST_INPUT"))) { Console.WriteLine("TOTAL PASS: "+passed+" (optional RPF fixture skipped)"); return 0; }
+        string root = Path.Combine(Path.GetTempPath(),"shrinker-v-tests-"+Guid.NewGuid().ToString("N")); Directory.CreateDirectory(root);
         try {
-        opts = new ProcessingOptions { InputFolder = Environment.GetEnvironmentVariable("WAKA_TEST_INPUT"), OutputFolder = Path.Combine(root,"smoke"), ProtectCharacters = true, KeepAudio = true, KeepVideo = true, KeepEffects = true, MaxThreads = 2, MinTextureSize = 32 };
+        opts = new ProcessingOptions { InputFolder = Environment.GetEnvironmentVariable("SHRINKER_V_TEST_INPUT"), OutputFolder = Path.Combine(root,"smoke"), ProtectCharacters = true, KeepAudio = true, KeepVideo = true, KeepEffects = true, MaxThreads = 2, MinTextureSize = 32 };
         var before = File.ReadAllBytes(Path.Combine(opts.InputFolder,"x64a.rpf"));
-        var stats = WakaShrinker.Run(opts,Console.WriteLine);
+        var stats = Shrinker.Run(opts,Console.WriteLine);
         Check(stats.ArchivesProcessed == 1 && stats.ErrorsEncountered == 0,"real RPF pipeline without errors");
         Check(stats.TexturesShrunken > 0,"textures actually compressed");
         Check(before.SequenceEqual(File.ReadAllBytes(Path.Combine(opts.InputFolder,"x64a.rpf"))),"source unchanged");
@@ -129,7 +129,7 @@ internal static class StudioTests
         var originalMpEntry=child.AllEntries.OfType<RpfFileEntry>().First(e=>e.Name.EndsWith(".ytd"));
         byte[] originalTextureBytes=child.ExtractFile(originalMpEntry);
         var mixedOptions = new ProcessingOptions { InputFolder=mixedInput,OutputFolder=Path.Combine(root,"mixed_output"),ProtectCharacters=true,KeepVideo=false,KeepEffects=true,KeepAudio=true,MaxThreads=1 };
-        var mixedStats = WakaShrinker.Run(mixedOptions,Console.WriteLine);
+        var mixedStats = Shrinker.Run(mixedOptions,Console.WriteLine);
         Check(mixedStats.ErrorsEncountered == 0 && mixedStats.ArchivesModified > 0,"mixed nested archive processed");
         var mixedResult = new RpfFile(Path.Combine(mixedOptions.OutputFolder,fixtureName),fixtureName); mixedResult.ScanStructure(null,null);
         var protectedChild = mixedResult.Children.First(c=>c.Name=="mp_m_freemode_01.rpf");

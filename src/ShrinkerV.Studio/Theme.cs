@@ -6,7 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace Waka.Studio
+namespace ShrinkerV.Studio
 {
     internal static class Dk
     {

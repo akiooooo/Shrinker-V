@@ -1,5 +1,5 @@
-﻿using System;
-using Waka.Core;
+using System;
+using ShrinkerV.Core;
 
 internal static class CompressFolder
 {
@@ -12,11 +12,11 @@ internal static class CompressFolder
         }
         try
         {
-            var options = WakaShrinker.CreateDefaultOptions();
+            var options = Shrinker.CreateDefaultOptions();
             options.InputFolder = args[0];
             options.OutputFolder = args[1];
             options.UseGrayscale = true;
-            var stats = WakaShrinker.Run(options, Console.WriteLine);
+            var stats = Shrinker.Run(options, Console.WriteLine);
             Console.WriteLine("Archives modified: {0}; textures processed: {1}",
                 stats.ArchivesModified, stats.TexturesShrunken);
             return stats.ErrorsEncountered == 0 && stats.TexturesFailed == 0 && stats.ArchivesFailed == 0 ? 0 : 1;

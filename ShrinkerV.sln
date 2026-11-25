@@ -1,10 +1,10 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waka.Core", "src\Waka.Core\Waka.Core.csproj", "{333FB723-69B1-490E-8286-0ED193566001}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShrinkerV.Core", "src\ShrinkerV.Core\ShrinkerV.Core.csproj", "{333FB723-69B1-490E-8286-0ED193566001}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waka.Studio", "src\Waka.Studio\Waka.Studio.csproj", "{333FB723-69B1-490E-8286-0ED193566002}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShrinkerV.Studio", "src\ShrinkerV.Studio\ShrinkerV.Studio.csproj", "{333FB723-69B1-490E-8286-0ED193566002}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Waka.Tests", "tests\Waka.Tests\Waka.Tests.csproj", "{333FB723-69B1-490E-8286-0ED193566003}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShrinkerV.Tests", "tests\ShrinkerV.Tests\ShrinkerV.Tests.csproj", "{333FB723-69B1-490E-8286-0ED193566003}"
 EndProject
 Global
     GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-namespace Waka.Core
+namespace ShrinkerV.Core
 {
     public sealed class ProcessingStats
     {
