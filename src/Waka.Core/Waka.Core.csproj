@@ -1,0 +1,25 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\Build.props" />
+  <PropertyGroup>
+    <ProjectGuid>{333FB723-69B1-490E-8286-0ED193566001}</ProjectGuid>
+    <AssemblyName>Waka.Core</AssemblyName>
+    <OutputType>Library</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="netstandard"><HintPath>$(MSBuildToolsPath)\netstandard.dll</HintPath></Reference>
+    <Reference Include="CodeWalker.Core"><HintPath>$(WakaDependencyDir)\CodeWalker.Core.dll</HintPath></Reference>
+    <Reference Include="SharpDX"><HintPath>$(WakaDependencyDir)\SharpDX.dll</HintPath></Reference>
+    <Reference Include="SharpDX.Mathematics"><HintPath>$(WakaDependencyDir)\SharpDX.Mathematics.dll</HintPath></Reference>
+    <Compile Include="ProcessingOptions.cs" />
+    <Compile Include="ProcessingStats.cs" />
+    <Compile Include="WakaShrinker.cs" />
+    <Compile Include="GtaProcessor.cs" />
+    <Compile Include="ResourceRules.cs" />
+    <Compile Include="TextureProcessing.cs" />
+    <Compile Include="DdsEngine.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
