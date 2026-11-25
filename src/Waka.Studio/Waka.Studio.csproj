@@ -11,6 +11,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <ProjectReference Include="..\..\src\Waka.Core\Waka.Core.csproj"><Project>{333FB723-69B1-490E-8286-0ED193566001}</Project><Name>Waka.Core</Name></ProjectReference>
+    <EmbeddedResource Include="$(OutputPath)Waka.Core.dll"><LogicalName>Waka.Core.dll</LogicalName></EmbeddedResource>
     <Compile Include="Program.cs" />
     <Compile Include="MainForm.cs" />
     <Compile Include="Theme.cs" />

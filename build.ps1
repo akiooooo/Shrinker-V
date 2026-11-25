@@ -1,7 +1,7 @@
-﻿[CmdletBinding()]
+[CmdletBinding()]
 param(
-    [string]$DependencyDir = (Join-Path $PSScriptRoot 'local\managed'),
-    [string]$RuntimeDir = (Join-Path $PSScriptRoot 'local\runtime'),
+    [string]$DependencyDir = (Join-Path $PSScriptRoot 'vendor\managed'),
+    [string]$RuntimeDir,
     [switch]$Test,
     [string]$FixtureDir
 )
@@ -15,20 +15,20 @@ foreach ($name in 'CodeWalker.Core.dll', 'SharpDX.dll', 'SharpDX.Mathematics.dll
     }
 }
 
-& (Join-Path $framework 'MSBuild.exe') (Join-Path $PSScriptRoot 'WakaShrinker.sln') /nologo /v:minimal /p:Configuration=Release /p:Platform=x64 "/p:FrameworkPathOverride=$framework" "/p:WakaDependencyDir=$managed"
+$bundle = Join-Path $PSScriptRoot 'vendor\runtime.zip'
+if ($RuntimeDir) {
+    $buildDir = New-Item -Type Directory -Force (Join-Path $PSScriptRoot 'artifacts')
+    $bundle = Join-Path $buildDir.FullName 'runtime-custom.zip'
+    $names = 'gtav_aes_key.dat','gtav_ng_key.dat','gtav_hash_lut.dat','gtav_ng_decrypt_tables.dat',
+             'gtav_ng_encrypt_tables.dat','gtav_ng_encrypt_luts.dat','embedded_timer.awc','embedded_cut_iaaj.ypt',
+             'minimal_ydr.stub','minimal_yft.stub','minimal_ybn.stub'
+    $paths = foreach ($name in $names) { (Get-Item -LiteralPath (Join-Path $RuntimeDir $name)).FullName }
+    Compress-Archive -LiteralPath $paths -DestinationPath $bundle -Force
+}
+& (Join-Path $framework 'MSBuild.exe') (Join-Path $PSScriptRoot 'WakaShrinker.sln') /nologo /v:minimal /p:Configuration=Release /p:Platform=x64 "/p:FrameworkPathOverride=$framework" "/p:WakaDependencyDir=$managed" "/p:RuntimeBundle=$bundle"
 if ($LASTEXITCODE) { throw "Build failed ($LASTEXITCODE)" }
 
 $out = Join-Path $PSScriptRoot 'artifacts\Release'
-if (Test-Path -LiteralPath $RuntimeDir -PathType Container) {
-    $target = New-Item -ItemType Directory -Force (Join-Path $out 'runtime')
-    $files = 'gtav_aes_key.dat','gtav_ng_key.dat','gtav_ng_decrypt_tables.dat','gtav_ng_encrypt_tables.dat',
-             'gtav_ng_encrypt_luts.dat','gtav_hash_lut.dat','embedded_timer.awc','embedded_cut_iaaj.ypt',
-             'minimal_ydr.stub','minimal_yft.stub','minimal_ybn.stub'
-    foreach ($name in $files) {
-        $source = Join-Path $RuntimeDir $name
-        if (Test-Path -LiteralPath $source -PathType Leaf) { Copy-Item -LiteralPath $source -Destination $target.FullName }
-    }
-}
 if ($Test) {
     $previous = $env:WAKA_TEST_INPUT
     try {

@@ -11,6 +11,8 @@ namespace Waka.Core
 
     public static class WakaShrinker
     {
+        static WakaShrinker() { BundledRuntime.Initialize(); }
+
         private static int active;
 
         public static ProcessingOptions CreateDefaultOptions()
@@ -72,8 +74,7 @@ namespace Waka.Core
     {
         internal static string DirectoryPath
         {
-            get { return Path.GetFullPath(Environment.GetEnvironmentVariable("WAKA_RUNTIME_DIR") ??
-                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "runtime")); }
+            get { return BundledRuntime.DirectoryPath; }
         }
 
         internal static byte[] Read(string name)

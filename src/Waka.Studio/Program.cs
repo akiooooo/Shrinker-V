@@ -1,5 +1,8 @@
 using System;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Waka.Studio
 {
@@ -7,6 +10,24 @@ namespace Waka.Studio
     {
         [STAThread]
         private static void Main()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += LoadCore;
+            StartStudio();
+        }
+
+        private static Assembly LoadCore(object sender, ResolveEventArgs args)
+        {
+            if (new AssemblyName(args.Name).Name != "Waka.Core") return null;
+            using (var stream = typeof(Program).Assembly.GetManifestResourceStream("Waka.Core.dll"))
+            using (var bytes = new MemoryStream())
+            {
+                stream.CopyTo(bytes);
+                return Assembly.Load(bytes.ToArray());
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void StartStudio()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

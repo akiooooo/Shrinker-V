@@ -1,11 +1,12 @@
-﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <Configuration Condition="'$(Configuration)' == ''">Release</Configuration>
     <PlatformTarget>x64</PlatformTarget>
     <Optimize>true</Optimize>
+    <RuntimeBundle Condition="'$(RuntimeBundle)' == ''">$(MSBuildThisFileDirectory)vendor\runtime.zip</RuntimeBundle>
     <CodePage>65001</CodePage>
     <OutputPath>$(MSBuildThisFileDirectory)artifacts\$(Configuration)\</OutputPath>
-    <WakaDependencyDir Condition="'$(WakaDependencyDir)' == ''">$(MSBuildThisFileDirectory)local\managed</WakaDependencyDir>
+    <WakaDependencyDir Condition="'$(WakaDependencyDir)' == ''">$(MSBuildThisFileDirectory)vendor\managed</WakaDependencyDir>
   </PropertyGroup>
 </Project>

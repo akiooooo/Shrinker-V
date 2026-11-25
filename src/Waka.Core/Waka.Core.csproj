@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\..\Build.props" />
   <PropertyGroup>
     <ProjectGuid>{333FB723-69B1-490E-8286-0ED193566001}</ProjectGuid>
@@ -12,6 +12,13 @@
     <Reference Include="CodeWalker.Core"><HintPath>$(WakaDependencyDir)\CodeWalker.Core.dll</HintPath></Reference>
     <Reference Include="SharpDX"><HintPath>$(WakaDependencyDir)\SharpDX.dll</HintPath></Reference>
     <Reference Include="SharpDX.Mathematics"><HintPath>$(WakaDependencyDir)\SharpDX.Mathematics.dll</HintPath></Reference>
+    <Reference Include="System.IO.Compression" />
+    <EmbeddedResource Include="$(WakaDependencyDir)\CodeWalker.Core.dll"><LogicalName>CodeWalker.Core.dll</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="$(WakaDependencyDir)\SharpDX.dll"><LogicalName>SharpDX.dll</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="$(WakaDependencyDir)\SharpDX.Mathematics.dll"><LogicalName>SharpDX.Mathematics.dll</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="$(RuntimeBundle)"><LogicalName>runtime.zip</LogicalName></EmbeddedResource>
+    <EmbeddedResource Include="..\..\licenses\*.txt"><LogicalName>licenses/%(Filename)%(Extension)</LogicalName></EmbeddedResource>
+    <Compile Include="BundledRuntime.cs" />
     <Compile Include="ProcessingOptions.cs" />
     <Compile Include="ProcessingStats.cs" />
     <Compile Include="WakaShrinker.cs" />

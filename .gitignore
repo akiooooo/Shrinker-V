@@ -16,3 +16,7 @@ obj/
 *.stub
 *.wakabak
 .env
+
+!/vendor/managed/CodeWalker.Core.dll
+!/vendor/managed/SharpDX.dll
+!/vendor/managed/SharpDX.Mathematics.dll
