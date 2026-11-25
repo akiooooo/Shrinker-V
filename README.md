@@ -6,7 +6,7 @@
 
 **Windows x64** · **GTA V** · **WinForms и C# API**
 
-[Скачать сборку для Windows](https://github.com/akiooooo/shrinker-v-by-akiooo/releases/latest) · [Зависимости](DEPENDENCIES.md) · [Пример API](examples/CompressFolder.cs)
+[Скачать сборку для Windows](https://github.com/akiooooo/Shrinker-V/releases/latest) · [Зависимости](DEPENDENCIES.md) · [Пример API](examples/CompressFolder.cs)
 
 ![Главное окно Shrinker V by akiooo с настройками окружения, игрока и NPC](docs/images/studio.png)
 
@@ -18,7 +18,7 @@
 
 ## Готовая сборка
 
-[Скачайте Shrinker V by akiooo для Windows x64](https://github.com/akiooooo/shrinker-v-by-akiooo/releases/latest/download/Shrinker-V-by-akiooo.exe) и запустите EXE. Для работы нужен .NET Framework 4.8. Библиотеки, данные для чтения и записи RPF и ресурсы дополнительных режимов уже внутри.
+[Скачайте Shrinker V by akiooo для Windows x64](https://github.com/akiooooo/Shrinker-V/releases/latest/download/Shrinker-V-by-akiooo.exe) и запустите EXE. Для работы нужен .NET Framework 4.8. Библиотеки, данные для чтения и записи RPF и ресурсы дополнительных режимов уже внутри.
 
 ## Сборка из исходников
 
