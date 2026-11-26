@@ -1,0 +1,38 @@
+namespace GameFormats.Files
+{
+	public enum GameFileType
+	{
+		Ydd,
+		Ydr,
+		Yft,
+		Ymap,
+		Ymf,
+		Ymt,
+		Ytd,
+		Ytyp,
+		Ybn,
+		Ycd,
+		Ypt,
+		Ynd,
+		Ynv,
+		Rel,
+		Ywr,
+		Yvr,
+		Gtxd,
+		Vehicles,
+		CarCols,
+		CarModCols,
+		CarVariations,
+		VehicleLayouts,
+		Peds,
+		Ped,
+		Yed,
+		Yld,
+		Yfd,
+		Heightmap,
+		Watermap,
+		Mrf,
+		DistantLights,
+		Ypdb
+	}
+}
